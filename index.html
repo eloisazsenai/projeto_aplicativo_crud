@@ -1,0 +1,40 @@
+1 <!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de livros</title>
+</head>
+<body>
+    <main id="geral">
+        <h1>Cadastro de Livros</h1>
+
+    <section id="secao-form">
+       <div id="div-form-livros">
+        <form>
+            <label for="titulo">Título</label>
+            <input class="input01" type="text" id="titulo" name="titulo" required placeholder="Informe o título">
+
+            <label for="autor">Autor</label>
+            <input class="input01" type="text" id="autor" name="autor" required placeholder="Informe o autor">
+
+            <label for="ano">Ano de publicação</label>
+            <input class="input01" type="text" id="ano" name="ano">
+
+            <label for="genero">Gênero</label>
+            <input class="input01" type="text" id="genero" name="genero">
+
+            <button class="botoes" id="adicionar" type="submit">Adicionar</button>
+            <button class="botoes" id="limpar" type="reset">Limpar</button>
+            
+        </form>
+       </div>
+    </section>
+
+    <section id="secao-lista">
+        <div id="div-lista-livros">
+        </div>
+    </section>
+    </main>
+</body>
+</html>

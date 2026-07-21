@@ -104,15 +104,26 @@ function limparModoEdicao(): void {
 function cadastrarOuEditarLivro(evento: SubmitEvent): void {
     evento.preventDefault();
 
+    //VALIDAÇÂO DE CAMPOS 
+    const titulo: string = tituloInput.value.trim(); //REMOVENDO OS ESPAÇOS
+    const autor: string = autorInput.value.trim();
+    const genero: string = generoInput.value.trim();
+    const resumo: string = resumoInput.value.trim();
+
+    if (titulo === "" || autor === "" || genero === "" || resumo === ""){
+        mostrarMensagem("Preencha corretamente todos os campos obrigatório.");
+        return;
+    }
+
     const anoDigitado: string = anoInput.value;
     const ano: number | null = anoDigitado === "" ? null : Number(anoDigitado);
     const livroPreenchido: Livro = new Livro(
         idEmEdicao ?? Date.now(),
-        tituloInput.value,
-        autorInput.value,
+        titulo,
+        autor,
         ano,
-        generoInput.value,
-        resumoInput.value
+        genero,
+        resumo
     );
 
     // Estrutura de decisão: cadastra um novo livro ou atualiza o existente.
@@ -189,3 +200,6 @@ listaLivros.addEventListener("click", (evento: MouseEvent) => {
 });
 
 renderizarLivros();
+
+
+

@@ -21,6 +21,6 @@
   },
   "homepage": "https://github.com/eloisazsenai/projeto_aplicativo_crud#readme",
   "devDependencies": {
-    "typescript": "^7.0.2"
+    "typescript": "^5.9.3"
   }
 }

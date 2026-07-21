@@ -80,9 +80,18 @@ function limparModoEdicao() {
 }
 function cadastrarOuEditarLivro(evento) {
     evento.preventDefault();
+    //VALIDAÇÂO DE CAMPOS 
+    const titulo = tituloInput.value.trim(); //REMOVENDO OS ESPAÇOS
+    const autor = autorInput.value.trim();
+    const genero = generoInput.value.trim();
+    const resumo = resumoInput.value.trim();
+    if (titulo === "" || autor === "" || genero === "" || resumo === "") {
+        mostrarMensagem("Preencha corretamente todos os campos obrigatório.");
+        return;
+    }
     const anoDigitado = anoInput.value;
     const ano = anoDigitado === "" ? null : Number(anoDigitado);
-    const livroPreenchido = new Livro(idEmEdicao ?? Date.now(), tituloInput.value, autorInput.value, ano, generoInput.value, resumoInput.value);
+    const livroPreenchido = new Livro(idEmEdicao ?? Date.now(), titulo, autor, ano, genero, resumo);
     // Estrutura de decisão: cadastra um novo livro ou atualiza o existente.
     if (idEmEdicao === null) {
         livros.push(livroPreenchido);

@@ -7,6 +7,7 @@ export class Livro {
     ano: number | null;
     genero: string;
     resumo: string;
+    avaliacao: number;
 
     // O construtor recebe os dados e cria uma nova instância de Livro.
     constructor(
@@ -15,7 +16,8 @@ export class Livro {
         autor: string,
         ano: number | null,
         genero: string,
-        resumo: string
+        resumo: string,
+        avaliacao: number
     ) {
         // "this" representa o objeto que está sendo criado.
         this.id = id;
@@ -24,5 +26,6 @@ export class Livro {
         this.ano = ano;
         this.genero = genero;
         this.resumo = resumo;
+        this.avaliacao = avaliacao;
     }
 }

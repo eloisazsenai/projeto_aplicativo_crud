@@ -35,6 +35,19 @@
                     <input type="text" id="titulo" name="titulo" placeholder="Ex.: O Pequeno Príncipe" required maxlength="300" minlength="1">
                 </div>
 
+                <!-- Campo extra criado para registrar a nota pessoal do livro. -->
+                <div class="campo campo-largo">
+                    <label for="avaliacao">Avaliação</label>
+                    <select id="avaliacao" name="avaliacao" required>
+                        <option value="">Selecione uma nota</option>
+                        <option value="1">1 estrela</option>
+                        <option value="2">2 estrelas</option>
+                        <option value="3">3 estrelas</option>
+                        <option value="4">4 estrelas</option>
+                        <option value="5">5 estrelas</option>
+                    </select>
+                </div>
+
                 <div class="campo campo-largo">
                     <label for="autor">Autor</label>
                     <input type="text" id="autor" name="autor" placeholder="Ex.: Antoine de Saint-Exupéry" required maxlength="150" minlength="1">

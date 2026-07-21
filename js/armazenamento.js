@@ -14,7 +14,15 @@ export function carregarLivros() {
         // JSON.parse transforma o texto salvo novamente em um array de objetos.
         const livrosSalvos = JSON.parse(dadosSalvos);
         // Recria cada objeto usando a classe Livro para manter o mesmo modelo do cadastro.
-        return livrosSalvos.map((livro) => new Livro(livro.id, livro.titulo, livro.autor, livro.ano, livro.genero, livro.resumo));
+        return livrosSalvos.map((livro) => {
+            // Livros salvos antes da criação deste campo recebem 0, que significa "sem avaliação".
+            const avaliacaoValida = Number.isInteger(livro.avaliacao)
+                && livro.avaliacao >= 1
+                && livro.avaliacao <= 5
+                ? livro.avaliacao
+                : 0;
+            return new Livro(livro.id, livro.titulo, livro.autor, livro.ano, livro.genero, livro.resumo, avaliacaoValida);
+        });
     }
     catch {
         // Se os dados estiverem inválidos, evita que a aplicação pare de funcionar.

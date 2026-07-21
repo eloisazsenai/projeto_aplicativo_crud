@@ -11,6 +11,7 @@ Aplicação web desenvolvida para a atividade prática de Codificação Front-en
 - Persistência dos dados no Local Storage.
 - Interface responsiva.
 - Organização do TypeScript em módulos.
+- Avaliação pessoal de 1 a 5 estrelas para cada livro.
 
 ## Como executar
 

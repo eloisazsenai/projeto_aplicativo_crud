@@ -11,6 +11,8 @@ const autorInput = document.querySelector("#autor");
 const anoInput = document.querySelector("#ano");
 const generoInput = document.querySelector("#genero");
 const resumoInput = document.querySelector("#resumo");
+// Seleciona o campo extra que guarda uma nota de 1 a 5 para o livro.
+const avaliacaoSelect = document.querySelector("#avaliacao");
 // Seleciona o campo usado para pesquisar os livros pelo título.
 const pesquisaInput = document.querySelector("#pesquisa");
 // Seleciona a lista de opções que define como os livros serão ordenados.
@@ -98,6 +100,10 @@ function renderizarLivros() {
     listaLivros.innerHTML = "";
     // Estrutura de repetição utilizada para mostrar todos os livros.
     for (const livro of livrosOrdenados) {
+        // repeat monta a representação visual da nota com estrelas preenchidas e vazias.
+        const avaliacaoTexto = livro.avaliacao > 0
+            ? "★".repeat(livro.avaliacao) + "☆".repeat(5 - livro.avaliacao)
+            : "Sem avaliação";
         // Cria um elemento <article> para representar o livro atual.
         const cartao = document.createElement("article");
         cartao.className = "cartao-livro";
@@ -112,6 +118,7 @@ function renderizarLivros() {
             <div class="metadados">
                 ${livro.genero ? `<span>${escaparHtml(livro.genero)}</span>` : ""}
                 ${livro.ano !== null ? `<span>${livro.ano}</span>` : ""}
+                <span class="avaliacao-livro" aria-label="Avaliação: ${livro.avaliacao} de 5">${avaliacaoTexto}</span>
             </div>
             <div class="acoes-cartao">
                 <button class="acao-cartao" type="button" data-acao="editar" data-id="${livro.id}">Editar</button>
@@ -146,6 +153,8 @@ function cadastrarOuEditarLivro(evento) {
     const autor = autorInput.value.trim();
     const genero = generoInput.value.trim();
     const resumo = resumoInput.value.trim();
+    // O valor do select chega como string e precisa ser convertido para number.
+    const avaliacao = Number(avaliacaoSelect.value);
     // Interrompe a função caso algum campo textual contenha apenas espaços.
     if (titulo === "" || autor === "" || genero === "" || resumo === "") {
         mostrarMensagem("Preencha corretamente todos os campos obrigatórios.");
@@ -158,9 +167,14 @@ function cadastrarOuEditarLivro(evento) {
         mostrarMensagem("Informe um ano válido entre 1 e 2026.");
         return;
     }
+    // Garante que a avaliação esteja dentro das cinco opções disponíveis.
+    if (!Number.isInteger(avaliacao) || avaliacao < 1 || avaliacao > 5) {
+        mostrarMensagem("Selecione uma avaliação entre 1 e 5 estrelas.");
+        return;
+    }
     // Cria um objeto Livro com os valores validados.
     // Em uma edição, mantém o id atual; em um cadastro, Date.now() gera um novo id.
-    const livroPreenchido = new Livro(idEmEdicao ?? Date.now(), titulo, autor, ano, genero, resumo);
+    const livroPreenchido = new Livro(idEmEdicao ?? Date.now(), titulo, autor, ano, genero, resumo, avaliacao);
     // Estrutura de decisão: cadastra um novo livro ou atualiza o existente.
     if (idEmEdicao === null) {
         // push adiciona o novo objeto ao final do array.
@@ -196,6 +210,8 @@ function editarLivro(id) {
     anoInput.value = livro.ano === null ? "" : String(livro.ano);
     generoInput.value = livro.genero;
     resumoInput.value = livro.resumo;
+    // Um livro antigo sem nota deixa a opção inicial selecionada.
+    avaliacaoSelect.value = livro.avaliacao === 0 ? "" : String(livro.avaliacao);
     botaoAdicionar.textContent = "Salvar alterações";
     modoFormulario.textContent = "Edição";
 }

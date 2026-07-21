@@ -210,6 +210,13 @@ textarea{
     font-size:14px;
 }
 
+/* Destaca visualmente a avaliação pessoal do livro. */
+.metadados .avaliacao-livro{
+    background:#fef3c7;
+    color:#b45309;
+    letter-spacing:2px;
+}
+
 .acoes-cartao{
     display:flex;
     gap:10px;

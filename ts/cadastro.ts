@@ -144,8 +144,8 @@ function cadastrarOuEditarLivro(evento: SubmitEvent): void {
     const ano: number = Number(anoInput.value);
 
     // Aceita somente anos inteiros dentro do intervalo definido no formulário.
-    if (!Number.isInteger(ano) || ano < 1000 || ano > 2026) {
-        mostrarMensagem("Informe um ano válido entre 1000 e 2026.");
+    if (!Number.isInteger(ano) || ano < 1 || ano > 2026) {
+        mostrarMensagem("Informe um ano válido entre 1 e 2026.");
         return;
     }
 

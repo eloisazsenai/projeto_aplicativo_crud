@@ -101,7 +101,8 @@ label{
 }
 
 input,
-textarea{
+textarea,
+select{
     width:100%;
     padding:12px;
     border:1px solid #ccc;
@@ -111,7 +112,8 @@ textarea{
 }
 
 input:focus,
-textarea:focus{
+textarea:focus,
+select:focus{
     border-color:#2563eb;
 }
 
@@ -152,8 +154,12 @@ textarea{
     background:#d1d5db;
 }
 
-/* Separa visualmente o campo de pesquisa da lista de livros. */
-.campo-pesquisa{
+/* Organiza os campos de pesquisa e ordenação antes da lista de livros. */
+.controles-lista{
+    display:grid;
+    grid-template-columns:1fr 220px;
+    gap:15px;
+    align-items:end;
     margin-bottom:25px;
 }
 
@@ -271,6 +277,10 @@ textarea{
 
     .acoes-formulario{
         flex-direction:column;
+    }
+
+    .controles-lista{
+        grid-template-columns:1fr;
     }
 
 }

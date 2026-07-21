@@ -76,10 +76,24 @@
 
             </div>
 
-            <!-- Campo do bônus usado para pesquisar livros pelo título. -->
-            <div class="campo-pesquisa">
-                <label for="pesquisa">Pesquisar pelo título</label>
-                <input type="search" id="pesquisa" name="pesquisa" placeholder="Digite o título do livro">
+            <!-- Controles dos bônus usados para pesquisar e ordenar os livros. -->
+            <div class="controles-lista">
+                <div class="campo-pesquisa">
+                    <label for="pesquisa">Pesquisar pelo título</label>
+                    <input type="search" id="pesquisa" name="pesquisa" placeholder="Digite o título do livro">
+                </div>
+
+                <div class="campo-ordenacao">
+                    <label for="ordenacao">Ordenar por</label>
+                    <select id="ordenacao" name="ordenacao">
+                        <option value="cadastro">Ordem de cadastro</option>
+                        <option value="titulo-az">Título: A a Z</option>
+                        <option value="titulo-za">Título: Z a A</option>
+                        <option value="autor-az">Autor: A a Z</option>
+                        <option value="ano-recente">Ano: mais recente</option>
+                        <option value="ano-antigo">Ano: mais antigo</option>
+                    </select>
+                </div>
             </div>
 
             <div id="div-lista-livros" class="lista-livros"></div>

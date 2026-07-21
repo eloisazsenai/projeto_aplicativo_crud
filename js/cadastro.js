@@ -24,6 +24,8 @@ const generoInput = document.querySelector("#genero");
 const resumoInput = document.querySelector("#resumo");
 // Seleciona o campo usado para pesquisar os livros pelo título.
 const pesquisaInput = document.querySelector("#pesquisa");
+// Seleciona a lista de opções que define como os livros serão ordenados.
+const ordenacaoSelect = document.querySelector("#ordenacao");
 const listaLivros = document.querySelector("#div-lista-livros");
 const contadorLivros = document.querySelector("#contador-livros");
 const botaoAdicionar = document.querySelector("#adicionar");
@@ -50,6 +52,33 @@ function normalizarTexto(texto) {
         .replace(/[\u0300-\u036f]/g, "")
         .toLowerCase();
 }
+// Recebe os livros filtrados e devolve uma nova lista na ordem escolhida.
+// O operador [...] cria uma cópia para que o array principal não seja alterado pelo sort.
+function ordenarLivros(livrosParaOrdenar) {
+    const livrosOrdenados = [...livrosParaOrdenar];
+    // switch executa uma comparação diferente de acordo com a opção selecionada.
+    switch (ordenacaoSelect.value) {
+        case "titulo-az":
+            livrosOrdenados.sort((a, b) => a.titulo.localeCompare(b.titulo, "pt-BR"));
+            break;
+        case "titulo-za":
+            livrosOrdenados.sort((a, b) => b.titulo.localeCompare(a.titulo, "pt-BR"));
+            break;
+        case "autor-az":
+            livrosOrdenados.sort((a, b) => a.autor.localeCompare(b.autor, "pt-BR"));
+            break;
+        case "ano-recente":
+            livrosOrdenados.sort((a, b) => (b.ano ?? 0) - (a.ano ?? 0));
+            break;
+        case "ano-antigo":
+            livrosOrdenados.sort((a, b) => (a.ano ?? 0) - (b.ano ?? 0));
+            break;
+        default:
+            // Na opção padrão, a cópia mantém a mesma ordem em que os livros foram cadastrados.
+            break;
+    }
+    return livrosOrdenados;
+}
 // Atualiza a lista exibida na tela usando os dados do array "livros".
 function renderizarLivros() {
     // Lê o que foi digitado e deixa o texto pronto para a comparação.
@@ -60,8 +89,10 @@ function renderizarLivros() {
         const tituloNormalizado = normalizarTexto(livro.titulo);
         return tituloNormalizado.includes(termoPesquisado);
     });
+    // Aplica a ordenação somente depois da pesquisa, trabalhando com os resultados visíveis.
+    const livrosOrdenados = ordenarLivros(livrosFiltrados);
     // Atualiza o contador e escolhe singular ou plural com um operador ternário.
-    const quantidade = livrosFiltrados.length;
+    const quantidade = livrosOrdenados.length;
     contadorLivros.textContent = `${quantidade} ${quantidade === 1 ? "livro" : "livros"}`;
     // Se não houver resultados, apresenta uma mensagem adequada para cada situação.
     if (quantidade === 0) {
@@ -77,7 +108,7 @@ function renderizarLivros() {
     // Limpa a lista antes de criar novamente os cartões.
     listaLivros.innerHTML = "";
     // Estrutura de repetição utilizada para mostrar todos os livros.
-    for (const livro of livrosFiltrados) {
+    for (const livro of livrosOrdenados) {
         // Cria um elemento <article> para representar o livro atual.
         const cartao = document.createElement("article");
         cartao.className = "cartao-livro";
@@ -198,6 +229,8 @@ form.addEventListener("submit", cadastrarOuEditarLivro);
 form.addEventListener("reset", () => window.setTimeout(limparModoEdicao, 0));
 // O evento input executa a pesquisa novamente a cada letra digitada.
 pesquisaInput.addEventListener("input", renderizarLivros);
+// O evento change reorganiza a lista quando uma nova opção é selecionada.
+ordenacaoSelect.addEventListener("change", renderizarLivros);
 // Usa delegação de eventos: um único evento trata todos os botões da lista.
 listaLivros.addEventListener("click", (evento) => {
     // closest procura o botão Editar ou Excluir que recebeu o clique.

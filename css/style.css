@@ -1,0 +1,268 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#eef2f7;
+    color:#333;
+}
+
+.cabecalho{
+    background:#2563eb;
+    color:#fff;
+    padding:40px 20px;
+}
+
+.cabecalho-conteudo{
+    max-width:1200px;
+    margin:auto;
+}
+
+.etiqueta{
+    font-size:14px;
+    text-transform:uppercase;
+    letter-spacing:2px;
+    opacity:.8;
+}
+
+.cabecalho h1{
+    margin:10px 0;
+    font-size:40px;
+}
+
+.subtitulo{
+    font-size:18px;
+}
+
+.conteudo{
+    max-width:1200px;
+    margin:30px auto;
+    display:grid;
+    grid-template-columns:380px 1fr;
+    gap:30px;
+    padding:0 20px;
+}
+
+.painel{
+    background:#fff;
+    border-radius:12px;
+    padding:25px;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+}
+
+.titulo-secao{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.numero-secao{
+    color:#2563eb;
+    font-weight:bold;
+    font-size:14px;
+}
+
+.selo{
+    background:#2563eb;
+    color:#fff;
+    padding:6px 15px;
+    border-radius:20px;
+    font-size:14px;
+}
+
+.campo{
+    display:flex;
+    flex-direction:column;
+    margin-bottom:18px;
+}
+
+.campo-largo{
+    width:100%;
+}
+
+.linha-campos{
+    display:flex;
+    gap:15px;
+}
+
+.linha-campos .campo{
+    flex:1;
+}
+
+label{
+    margin-bottom:6px;
+    font-weight:bold;
+}
+
+input,
+textarea{
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    outline:none;
+    font-size:15px;
+}
+
+input:focus,
+textarea:focus{
+    border-color:#2563eb;
+}
+
+textarea{
+    resize:none;
+    min-height:120px;
+}
+
+.acoes-formulario{
+    display:flex;
+    gap:15px;
+    margin-top:20px;
+}
+
+.botao{
+    flex:1;
+    border:none;
+    padding:12px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:15px;
+}
+
+.botao-principal{
+    background:#2563eb;
+    color:white;
+}
+
+.botao-principal:hover{
+    background:#1d4ed8;
+}
+
+.botao-secundario{
+    background:#e5e7eb;
+}
+
+.botao-secundario:hover{
+    background:#d1d5db;
+}
+
+.lista-livros{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+}
+
+.cartao-livro{
+    background:#f8fafc;
+    border-left:6px solid #2563eb;
+    border-radius:10px;
+    padding:20px;
+}
+
+.cartao-topo{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.cartao-topo h3{
+    color:#2563eb;
+}
+
+.autor{
+    color:#666;
+    margin-top:5px;
+}
+
+.resumo{
+    margin:15px 0;
+    line-height:1.6;
+}
+
+.metadados{
+    display:flex;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.metadados span{
+    background:#dbeafe;
+    color:#1d4ed8;
+    padding:5px 12px;
+    border-radius:20px;
+    font-size:14px;
+}
+
+.acoes-cartao{
+    display:flex;
+    gap:10px;
+}
+
+.acao-cartao{
+    border:none;
+    padding:10px 18px;
+    border-radius:6px;
+    cursor:pointer;
+    color:white;
+    background:#2563eb;
+}
+
+.acao-cartao:hover{
+    background:#1d4ed8;
+}
+
+.acao-excluir{
+    background:#dc2626;
+}
+
+.acao-excluir:hover{
+    background:#b91c1c;
+}
+
+.estado-vazio{
+    text-align:center;
+    padding:50px 20px;
+    border:2px dashed #cbd5e1;
+    border-radius:10px;
+    color:#666;
+}
+
+.contador{
+    color:#777;
+    margin-top:5px;
+}
+
+.mensagem{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    background:#22c55e;
+    color:white;
+    padding:15px 25px;
+    border-radius:8px;
+    opacity:0;
+    transition:.4s;
+}
+
+.mensagem.visivel{
+    opacity:1;
+}
+
+@media(max-width:900px){
+
+    .conteudo{
+        grid-template-columns:1fr;
+    }
+
+    .linha-campos{
+        flex-direction:column;
+    }
+
+    .acoes-formulario{
+        flex-direction:column;
+    }
+
+}

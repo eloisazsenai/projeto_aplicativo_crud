@@ -1,31 +1,7 @@
-// A classe funciona como um modelo para criar objetos do tipo Livro.
-// Cada atributo possui um tipo definido pelo TypeScript.
-class Livro {
-    id: number;
-    titulo: string;
-    autor: string;
-    ano: number | null;
-    genero: string;
-    resumo: string;
-
-    // O construtor recebe os dados e cria uma nova instância de Livro.
-    constructor(
-        id: number,
-        titulo: string,
-        autor: string,
-        ano: number | null,
-        genero: string,
-        resumo: string
-    ) {
-        // "this" representa o objeto que está sendo criado.
-        this.id = id;
-        this.titulo = titulo;
-        this.autor = autor;
-        this.ano = ano;
-        this.genero = genero;
-        this.resumo = resumo;
-    }
-}
+// import traz para este arquivo os recursos que foram exportados pelos outros módulos.
+// A extensão .js é usada porque o navegador executará os arquivos depois da compilação.
+import { Livro } from "./livro.js";
+import { carregarLivros, salvarLivros } from "./armazenamento.js";
 
 // Seleciona os elementos do HTML que serão manipulados pelo TypeScript.
 // O tipo entre < > informa qual elemento HTML esperamos encontrar.
@@ -46,9 +22,6 @@ const botaoAdicionar = document.querySelector<HTMLButtonElement>("#adicionar")!;
 const modoFormulario = document.querySelector<HTMLSpanElement>("#modo-formulario")!;
 const mensagem = document.querySelector<HTMLDivElement>("#mensagem")!;
 
-// Nome usado para identificar os dados desta aplicação dentro do Local Storage.
-const CHAVE_LOCAL_STORAGE: string = "minha-estante-livros";
-
 // Carrega os livros que já estavam salvos quando a página é aberta.
 let livros: Livro[] = carregarLivros();
 
@@ -57,40 +30,6 @@ let idEmEdicao: number | null = null;
 
 // Guarda o identificador do temporizador usado para esconder as mensagens.
 let tempoMensagem: number;
-
-// Busca no Local Storage o texto JSON que representa o array de livros.
-// Se ainda não houver dados salvos, devolve um array vazio.
-function carregarLivros(): Livro[] {
-    const dadosSalvos: string | null = localStorage.getItem(CHAVE_LOCAL_STORAGE);
-
-    if (dadosSalvos === null) {
-        return [];
-    }
-
-    try {
-        // JSON.parse transforma o texto salvo novamente em um array de objetos.
-        const livrosSalvos: Livro[] = JSON.parse(dadosSalvos) as Livro[];
-
-        // Recria cada objeto usando a classe Livro para manter o mesmo modelo do cadastro.
-        return livrosSalvos.map((livro: Livro) => new Livro(
-            livro.id,
-            livro.titulo,
-            livro.autor,
-            livro.ano,
-            livro.genero,
-            livro.resumo
-        ));
-    } catch {
-        // Se os dados estiverem inválidos, evita que a aplicação pare de funcionar.
-        return [];
-    }
-}
-
-// Converte o array de livros em texto JSON e o guarda no navegador.
-// Esta função deve ser chamada sempre que o array for alterado.
-function salvarLivros(): void {
-    localStorage.setItem(CHAVE_LOCAL_STORAGE, JSON.stringify(livros));
-}
 
 // Converte textos digitados pelo usuário em conteúdo seguro para inserir no HTML.
 // Isso impede que uma entrada seja interpretada como uma tag HTML.
@@ -272,7 +211,7 @@ function cadastrarOuEditarLivro(evento: SubmitEvent): void {
     }
 
     // Salva o array atualizado antes de limpar o formulário e redesenhar a lista.
-    salvarLivros();
+    salvarLivros(livros);
 
     // Limpa o formulário, encerra a edição e atualiza a lista na tela.
     form.reset();
@@ -313,7 +252,7 @@ function excluirLivro(id: number): void {
     livros = livros.filter((item: Livro) => item.id !== id);
 
     // Atualiza o Local Storage para que o livro continue excluído após recarregar a página.
-    salvarLivros();
+    salvarLivros(livros);
 
     if (idEmEdicao === id) {
         form.reset();

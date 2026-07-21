@@ -5,17 +5,27 @@ Aplicação web desenvolvida para a atividade prática de Codificação Front-en
 ## Funcionalidades
 
 - Cadastro, listagem, edição e exclusão de livros.
-
-Os dados são mantidos apenas na memória enquanto a página está aberta, conforme permitido pelo enunciado. As funcionalidades de bônus serão desenvolvidas separadamente pelo grupo.
+- Pesquisa por título.
+- Ordenação por título, autor e ano.
+- Validação dos campos.
+- Persistência dos dados no Local Storage.
+- Interface responsiva.
+- Organização do TypeScript em módulos.
 
 ## Como executar
 
-Abra o arquivo `index.html` no navegador. O arquivo JavaScript necessário já está pronto na pasta `js`.
+1. Execute `npm.cmd install` para instalar o TypeScript.
+2. Execute `npm.cmd run build` para compilar os arquivos.
+3. Abra o `index.html` usando um servidor local, como a extensão Live Server do VS Code.
+
+Os módulos não devem ser executados abrindo o HTML diretamente pelo Explorador de Arquivos.
 
 ## Organização
 
 - `index.html`: estrutura da página.
-- `css/style.css`: arquivo reservado para a estilização que será feita pelo grupo.
-- `ts/cadastro.ts`: código-fonte em TypeScript.
-- `js/cadastro.js`: versão utilizada pelo navegador.
+- `css/style.css`: aparência e responsividade.
+- `ts/livro.ts`: classe que representa um livro.
+- `ts/armazenamento.ts`: leitura e gravação no Local Storage.
+- `ts/cadastro.ts`: formulário, pesquisa, ordenação e eventos.
+- `js/`: versões compiladas utilizadas pelo navegador.
 - `tsconfig.json`: configuração que indica como transformar TypeScript em JavaScript.

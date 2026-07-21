@@ -36,6 +36,8 @@ const autorInput = document.querySelector<HTMLInputElement>("#autor")!;
 const anoInput = document.querySelector<HTMLInputElement>("#ano")!;
 const generoInput = document.querySelector<HTMLInputElement>("#genero")!;
 const resumoInput = document.querySelector<HTMLTextAreaElement>("#resumo")!;
+// Seleciona o campo usado para pesquisar os livros pelo título.
+const pesquisaInput = document.querySelector<HTMLInputElement>("#pesquisa")!;
 const listaLivros = document.querySelector<HTMLDivElement>("#div-lista-livros")!;
 const contadorLivros = document.querySelector<HTMLParagraphElement>("#contador-livros")!;
 const botaoAdicionar = document.querySelector<HTMLButtonElement>("#adicionar")!;
@@ -59,18 +61,39 @@ function escaparHtml(texto: string): string {
     return elemento.innerHTML;
 }
 
+// Padroniza um texto removendo acentos e convertendo as letras para minúsculas.
+// Assim, uma pesquisa por "principE" também encontra "O Pequeno Príncipe".
+function normalizarTexto(texto: string): string {
+    return texto
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase();
+}
+
 // Atualiza a lista exibida na tela usando os dados do array "livros".
 function renderizarLivros(): void {
+    // Lê o que foi digitado e deixa o texto pronto para a comparação.
+    const termoPesquisado: string = normalizarTexto(pesquisaInput.value.trim());
+
+    // filter cria um novo array somente com os livros cujo título contém o termo pesquisado.
+    // Quando o campo está vazio, includes("") é verdadeiro e todos os livros são exibidos.
+    const livrosFiltrados: Livro[] = livros.filter((livro: Livro) => {
+        const tituloNormalizado: string = normalizarTexto(livro.titulo);
+        return tituloNormalizado.includes(termoPesquisado);
+    });
+
     // Atualiza o contador e escolhe singular ou plural com um operador ternário.
-    const quantidade: number = livros.length;
+    const quantidade: number = livrosFiltrados.length;
     contadorLivros.textContent = `${quantidade} ${quantidade === 1 ? "livro" : "livros"}`;
 
-    // Se não existirem livros, apresenta uma mensagem de estado vazio.
+    // Se não houver resultados, apresenta uma mensagem adequada para cada situação.
     if (quantidade === 0) {
+        const pesquisaAtiva: boolean = termoPesquisado !== "";
+
         listaLivros.innerHTML = `
             <div class="estado-vazio">
-                <strong>Sua estante está vazia</strong>
-                <p>Preencha o formulário para cadastrar seu primeiro livro.</p>
+                <strong>${pesquisaAtiva ? "Nenhum livro encontrado" : "Sua estante está vazia"}</strong>
+                <p>${pesquisaAtiva ? "Tente pesquisar usando outro título." : "Preencha o formulário para cadastrar seu primeiro livro."}</p>
             </div>
         `;
         return;
@@ -80,7 +103,7 @@ function renderizarLivros(): void {
     listaLivros.innerHTML = "";
 
     // Estrutura de repetição utilizada para mostrar todos os livros.
-    for (const livro of livros) {
+    for (const livro of livrosFiltrados) {
         // Cria um elemento <article> para representar o livro atual.
         const cartao: HTMLElement = document.createElement("article");
         cartao.className = "cartao-livro";
@@ -226,6 +249,9 @@ function excluirLivro(id: number): void {
 // Registra os eventos do formulário.
 form.addEventListener("submit", cadastrarOuEditarLivro);
 form.addEventListener("reset", () => window.setTimeout(limparModoEdicao, 0));
+
+// O evento input executa a pesquisa novamente a cada letra digitada.
+pesquisaInput.addEventListener("input", renderizarLivros);
 
 // Usa delegação de eventos: um único evento trata todos os botões da lista.
 listaLivros.addEventListener("click", (evento: MouseEvent) => {

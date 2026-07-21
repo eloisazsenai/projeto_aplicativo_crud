@@ -152,6 +152,11 @@ textarea{
     background:#d1d5db;
 }
 
+/* Separa visualmente o campo de pesquisa da lista de livros. */
+.campo-pesquisa{
+    margin-bottom:25px;
+}
+
 .lista-livros{
     display:flex;
     flex-direction:column;

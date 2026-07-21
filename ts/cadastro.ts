@@ -46,14 +46,51 @@ const botaoAdicionar = document.querySelector<HTMLButtonElement>("#adicionar")!;
 const modoFormulario = document.querySelector<HTMLSpanElement>("#modo-formulario")!;
 const mensagem = document.querySelector<HTMLDivElement>("#mensagem")!;
 
-// Array que armazena os livros enquanto a página estiver aberta.
-let livros: Livro[] = [];
+// Nome usado para identificar os dados desta aplicação dentro do Local Storage.
+const CHAVE_LOCAL_STORAGE: string = "minha-estante-livros";
+
+// Carrega os livros que já estavam salvos quando a página é aberta.
+let livros: Livro[] = carregarLivros();
 
 // Guarda o id do livro que está sendo editado. O valor null indica um novo cadastro.
 let idEmEdicao: number | null = null;
 
 // Guarda o identificador do temporizador usado para esconder as mensagens.
 let tempoMensagem: number;
+
+// Busca no Local Storage o texto JSON que representa o array de livros.
+// Se ainda não houver dados salvos, devolve um array vazio.
+function carregarLivros(): Livro[] {
+    const dadosSalvos: string | null = localStorage.getItem(CHAVE_LOCAL_STORAGE);
+
+    if (dadosSalvos === null) {
+        return [];
+    }
+
+    try {
+        // JSON.parse transforma o texto salvo novamente em um array de objetos.
+        const livrosSalvos: Livro[] = JSON.parse(dadosSalvos) as Livro[];
+
+        // Recria cada objeto usando a classe Livro para manter o mesmo modelo do cadastro.
+        return livrosSalvos.map((livro: Livro) => new Livro(
+            livro.id,
+            livro.titulo,
+            livro.autor,
+            livro.ano,
+            livro.genero,
+            livro.resumo
+        ));
+    } catch {
+        // Se os dados estiverem inválidos, evita que a aplicação pare de funcionar.
+        return [];
+    }
+}
+
+// Converte o array de livros em texto JSON e o guarda no navegador.
+// Esta função deve ser chamada sempre que o array for alterado.
+function salvarLivros(): void {
+    localStorage.setItem(CHAVE_LOCAL_STORAGE, JSON.stringify(livros));
+}
 
 // Converte textos digitados pelo usuário em conteúdo seguro para inserir no HTML.
 // Isso impede que uma entrada seja interpretada como uma tag HTML.
@@ -234,6 +271,9 @@ function cadastrarOuEditarLivro(evento: SubmitEvent): void {
         mostrarMensagem("Livro atualizado com sucesso.");
     }
 
+    // Salva o array atualizado antes de limpar o formulário e redesenhar a lista.
+    salvarLivros();
+
     // Limpa o formulário, encerra a edição e atualiza a lista na tela.
     form.reset();
     limparModoEdicao();
@@ -271,6 +311,9 @@ function excluirLivro(id: number): void {
 
     // filter cria um novo array contendo todos os livros, exceto o excluído.
     livros = livros.filter((item: Livro) => item.id !== id);
+
+    // Atualiza o Local Storage para que o livro continue excluído após recarregar a página.
+    salvarLivros();
 
     if (idEmEdicao === id) {
         form.reset();

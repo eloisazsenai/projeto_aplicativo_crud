@@ -1,0 +1,24 @@
+{
+  "name": "projeto_aplicativo_crud",
+  "version": "1.0.0",
+  "description": "Aplicação web desenvolvida para a atividade prática de Codificação Front-end.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eloisazsenai/projeto_aplicativo_crud.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/eloisazsenai/projeto_aplicativo_crud/issues"
+  },
+  "homepage": "https://github.com/eloisazsenai/projeto_aplicativo_crud#readme",
+  "devDependencies": {
+    "typescript": "^7.0.2"
+  }
+}

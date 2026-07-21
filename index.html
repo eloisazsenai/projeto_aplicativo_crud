@@ -1,43 +1,82 @@
-1 <!DOCTYPE html>
-<html lang="pt-br">
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de livros</title>
+    <meta name="description" content="Aplicação para cadastro e organização de livros.">
+    <title>Minha Estante | Cadastro de livros</title>
+    <script src="js/cadastro.js" defer></script>
 </head>
 <body>
-    <main id="geral">
-        <h1>Cadastro de Livros</h1>
-
-    <section id="secao-form">
-       <div id="div-form-livros">
-        <form>
-            <label for="titulo">Título</label>
-            <input class="input01" type="text" id="titulo" name="titulo" required placeholder="Informe o título">
-
-            <label for="autor">Autor</label>
-            <input class="input01" type="text" id="autor" name="autor" required placeholder="Informe o autor">
-
-            <label for="ano">Ano de publicação</label>
-            <input class="input01" type="text" id="ano" name="ano" placeholder="Informe o ano de publicação">
-
-            <label for="genero">Gênero</label>
-            <input class="input01" type="text" id="genero" name="genero" placeholder="Informe o gênero">
-
-            <label for="resumo">Resumo</label>
-            <textarea class="area-texto" name="resumo" id="resumo" required placeholder="Escreva um resumo"></textarea>
-
-            <button class="botoes" id="adicionar" type="submit">Adicionar</button>
-            <button class="botoes" id="limpar" type="reset">Limpar</button>
-            
-        </form>
-       </div>
-    </section>
-
-    <section id="secao-lista">
-        <div id="div-lista-livros">
+    <header class="cabecalho">
+        <div class="cabecalho-conteudo">
+            <p class="etiqueta">Biblioteca pessoal</p>
+            <h1>Minha Estante</h1>
+            <p class="subtitulo">Cadastre e organize suas próximas leituras.</p>
         </div>
-    </section>
+    </header>
+
+    <main id="geral" class="conteudo">
+        <section id="secao-form" class="painel painel-formulario" aria-labelledby="titulo-formulario">
+            <div class="titulo-secao">
+                <div>
+                    <p class="numero-secao">01</p>
+                    <h2 id="titulo-formulario">Novo livro</h2>
+                </div>
+                <span id="modo-formulario" class="selo">Cadastro</span>
+            </div>
+
+            <form id="form-livro">
+                <div class="campo campo-largo">
+                    <label for="titulo">Título</label>
+                    <input type="text" id="titulo" name="titulo" placeholder="Ex.: O Pequeno Príncipe">
+                </div>
+
+                <div class="campo campo-largo">
+                    <label for="autor">Autor</label>
+                    <input type="text" id="autor" name="autor" placeholder="Ex.: Antoine de Saint-Exupéry">
+                </div>
+
+                <div class="linha-campos">
+                    <div class="campo">
+                        <label for="ano">Ano</label>
+                        <input type="number" id="ano" name="ano" placeholder="1943">
+                    </div>
+
+                    <div class="campo">
+                        <label for="genero">Gênero</label>
+                        <input type="text" id="genero" name="genero" placeholder="Ficção">
+                    </div>
+                </div>
+
+                <div class="campo campo-largo">
+                    <label for="resumo">Resumo</label>
+                    <textarea name="resumo" id="resumo" placeholder="Escreva um pequeno resumo do livro"></textarea>
+                </div>
+
+                <div class="acoes-formulario">
+                    <button class="botao botao-principal" id="adicionar" type="submit">Adicionar livro</button>
+                    <button class="botao botao-secundario" id="limpar" type="reset">Limpar</button>
+                </div>
+            </form>
+        </section>
+
+        <section id="secao-lista" class="painel painel-lista" aria-labelledby="titulo-lista">
+            <div class="cabecalho-lista">
+                <div class="titulo-secao">
+                    <p class="numero-secao">02</p>
+                    <div>
+                        <h2 id="titulo-lista">Livros cadastrados</h2>
+                        <p id="contador-livros" class="contador">0 livros</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div id="div-lista-livros" class="lista-livros"></div>
+        </section>
     </main>
+
+    <div id="mensagem" class="mensagem" role="status" aria-live="polite"></div>
 </body>
 </html>

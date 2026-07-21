@@ -115,8 +115,14 @@ function cadastrarOuEditarLivro(evento: SubmitEvent): void {
         return;
     }
 
-    const anoDigitado: string = anoInput.value;
-    const ano: number | null = anoDigitado === "" ? null : Number(anoDigitado);
+      //VALIDAÇÃO DO ANO 
+      const ano: number= Number(anoInput.value);
+
+      if(!Number.isInteger(ano)|| ano < 1000 || ano > 2026){
+        mostrarMensagem("Informe um ano válido");
+        return;
+      }
+
     const livroPreenchido: Livro = new Livro(
         idEmEdicao ?? Date.now(),
         titulo,
